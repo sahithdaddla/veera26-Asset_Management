@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Asset Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #3f37c9;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
+            --success-color: #4cc9f0;
+            --border-radius: 12px;
+            --border-radius-sm: 6px;
+            --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --box-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        header {
+            width: 100%;
+            max-width: 1400px;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none" opacity="0.1"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="white"/></svg>');
+            background-size: 30px 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .header-quote {
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            background-color: white;
+            width: 100%;
+            max-width: 1400px;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+
+        .container:hover {
+            box-shadow: var(--box-shadow-hover);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 500;
+            position: relative;
+        }
+
+        th:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .asset-tag {
+            display: inline-block;
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-dark);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray-color);
+            font-size: 1.1rem;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .no-data i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--gray-color);
+            opacity: 0.5;
+        }
+
+        .search-filter {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        select {
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.95rem;
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 5px;
+        }
+
+        .pagination button {
+            padding: 8px 15px;
+            border: 1px solid var(--light-gray);
+            background-color: white;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .pagination button:hover {
+            background-color: var(--light-color);
+        }
+
+        .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 30px 15px;
+                margin-bottom: 20px;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+            }
+            
+            .filter-controls {
+                flex-direction: column;
+            }
+            
+            select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HR Asset Management</h1>
+        <div class="header-quote">
+            "Streamlining asset allocation for organizational efficiency"
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-filter">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search employees, assets...">
+            </div>
+            <div class="filter-controls">
+                <select id="department-filter">
+                    <option value="">All Departments</option>
+                </select>
+                <select id="sort-by">
+                    <option value="timestamp-desc">Newest First</option>
+                    <option value="timestamp-asc">Oldest First</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                </select>
+            </div>
+        </div>
+        
+        <table id="deliveries-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Employee ID</th>
+                    <th>Department</th>
+                    <th>Assets</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="no-data-message" class="no-data" style="display: none;">
+            <i class="fas fa-box-open"></i>
+            <p>No asset delivery records found.</p>
+        </div>
+        
+        <div class="pagination" id="pagination">
+            <!-- Pagination buttons will be added here -->
+        </div>
+    </div>
+    
+    <script>
+        // Sample data with provided names
+        const sampleData = [
+            {
+                employeeName: "Veera",
+                employeeId: "ATS0001",
+                department: "IT",
+                assets: ["Laptop", "Monitor", "Keyboard"],
+                timestamp: new Date("2023-05-15T09:30:00").getTime()
+            },
+            {
+                employeeName: "Raghava",
+                employeeId: "ATS0002",
+                department: "Associates",
+                assets: ["Laptop", "Laptop Charger"],
+                timestamp: new Date("2023-05-16T11:15:00").getTime()
+            },
+            {
+                employeeName: "Shravan",
+                employeeId: "ATS0003",
+                department: "Database",
+                assets: ["Laptop", "Mouse", "Headphones"],
+                timestamp: new Date("2023-05-17T14:45:00").getTime()
+            },
+            {
+                employeeName: "Srikanth",
+                employeeId: "ATS0004",
+                department: "HR",
+                assets: ["Laptop", "Monitor"],
+                timestamp: new Date("2023-05-18T10:00:00").getTime()
+            },
+            {
+                employeeName: "Pavan",
+                employeeId: "ATS0005",
+                department: "Associates",
+                assets: ["Laptop", "Laptop Bag"],
+                timestamp: new Date("2023-05-19T13:20:00").getTime()
+            }
+        ];
+
+        // DOM elements
+        const deliveriesTable = document.querySelector('#deliveries-table tbody');
+        const noDataMessage = document.getElementById('no-data-message');
+        const searchInput = document.getElementById('search-input');
+        const departmentFilter = document.getElementById('department-filter');
+        const sortBy = document.getElementById('sort-by');
+        const pagination = document.getElementById('pagination');
+
+        // Current page state
+        let currentPage = 1;
+        const itemsPerPage = 5;
+        let allDeliveries = [];
+        let filteredDeliveries = [];
+
+        // Validate and format name
+        function validateAndFormatName(name) {
+            if (!name || typeof name !== 'string') return null;
+            let formattedName = name.replace(/[^a-zA-Z]/g, '').trim();
+            formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1).toLowerCase();
+            if (formattedName.length < 2 || formattedName.length > 20 || /\d/.test(formattedName)) {
+                return null;
+            }
+            return formattedName;
+        }
+
+        // Validate employee ID
+        function validateEmployeeId(id) {
+            return id && typeof id === 'string' && /^ATS\d{4}$/.test(id);
+        }
+
+async function loadData() {
+    try {
+        console.log('Fetching deliveries from http://localhost:3000/api/deliveries');
+        const response = await fetch('http://localhost:3000/api/deliveries', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        console.log('Response status:', response.status, response.statusText);
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to fetch deliveries: ${response.status} ${response.statusText} - ${errorText}`);
+        }
+        const data = await response.json();
+        console.log('Response data:', data);
+        
+        if (!data.deliveries || !Array.isArray(data.deliveries)) {
+            throw new Error('Invalid response format: deliveries array missing or not an array');
+        }
+
+        allDeliveries = data.deliveries
+            .filter(item => {
+                // Validate required fields
+                if (!item.employee_name || !item.employee_id || !item.department || !Array.isArray(item.assets)) {
+                    console.warn('Invalid delivery item:', item);
+                    return false;
+                }
+                return true;
+            })
+            .map(delivery => ({
+                employeeName: delivery.employee_name,
+                employeeId: delivery.employee_id,
+                department: delivery.department,
+                assets: delivery.assets,
+                timestamp: new Date(delivery.timestamp).getTime(),
+            }));
+
+        if (allDeliveries.length === 0) {
+            showNoDataMessage('No valid delivery data found.');
+            return;
+        }
+
+        console.log('Processed allDeliveries:', allDeliveries);
+
+        // Populate department filter
+        populateDepartmentFilter(allDeliveries);
+        
+        // Filter and sort data
+        filterAndSortData();
+        
+    } catch (error) {
+        console.error('Error fetching data:', error.message);
+        showNoDataMessage(`Error loading data: ${error.message}`);
+    }
+}
+        function populateDepartmentFilter(deliveries) {
+            const departments = new Set();
+            deliveries.forEach(delivery => departments.add(delivery.department));
+            
+            departmentFilter.innerHTML = '<option value="">All Departments</option>';
+            departments.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                departmentFilter.appendChild(option);
+            });
+        }
+
+        function filterAndSortData() {
+            const searchTerm = searchInput.value.toLowerCase();
+            filteredDeliveries = allDeliveries.filter(delivery => {
+                const matchesSearch = 
+                    delivery.employeeName.toLowerCase().includes(searchTerm) ||
+                    delivery.employeeId.toLowerCase().includes(searchTerm) ||
+                    delivery.department.toLowerCase().includes(searchTerm) ||
+                    delivery.assets.some(asset => asset.toLowerCase().includes(searchTerm));
+                
+                const matchesDepartment = 
+                    !departmentFilter.value || 
+                    delivery.department === departmentFilter.value;
+                
+                return matchesSearch && matchesDepartment;
+            });
+            
+            const sortValue = sortBy.value;
+            filteredDeliveries.sort((a, b) => {
+                switch (sortValue) {
+                    case 'timestamp-desc':
+                        return b.timestamp - a.timestamp;
+                    case 'timestamp-asc':
+                        return a.timestamp - b.timestamp;
+                    case 'name-asc':
+                        return a.employeeName.localeCompare(b.employeeName);
+                    case 'name-desc':
+                        return b.employeeName.localeCompare(a.employeeName);
+                    default:
+                        return 0;
+                }
+            });
+            
+            updatePagination();
+            displayCurrentPage();
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredDeliveries.length / itemsPerPage);
+            pagination.innerHTML = '';
+            
+            if (totalPages <= 1) return;
+            
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '«';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayCurrentPage();
+                    updatePagination();
+                }
+            });
+            pagination.appendChild(prevButton);
+            
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = currentPage === i ? 'active' : '';
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    displayCurrentPage();
+                    updatePagination();
+                });
+                pagination.appendChild(pageButton);
+            }
+            
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = '»';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayCurrentPage();
+                    updatePagination();
+                }
+            });
+            pagination.appendChild(nextButton);
+        }
+
+        function displayCurrentPage() {
+            deliveriesTable.innerHTML = '';
+            
+            if (filteredDeliveries.length === 0) {
+                showNoDataMessage('No matching records found.');
+                return;
+            }
+            
+            noDataMessage.style.display = 'none';
+            
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredDeliveries.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const delivery = filteredDeliveries[i];
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${delivery.employeeName}</td>
+                    <td>${delivery.employeeId}</td>
+                    <td>${delivery.department}</td>
+                    <td>
+                        ${delivery.assets.map(asset => 
+                            `<span class="asset-tag">${asset}</span>`
+                        ).join('')}
+                    </td>
+                    <td>${formatDate(new Date(delivery.timestamp))}</td>
+                `;
+                
+                deliveriesTable.appendChild(row);
+            }
+        }
+
+        function formatDate(date) {
+            if (isNaN(date.getTime())) return 'Invalid Date';
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showNoDataMessage(message) {
+            noDataMessage.style.display = 'block';
+            noDataMessage.querySelector('p').textContent = message;
+            deliveriesTable.innerHTML = '';
+            pagination.innerHTML = '';
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', () => {
+            currentPage = 1;
+            filterAndSortData();
+        });
+        
+        departmentFilter.addEventListener('change', () => {
+            currentPage = 1;
+            filterAndSortData();
+        });
+        
+        sortBy.addEventListener('change', () => {
+            currentPage = 1;
+            filterAndSortData();
+        });
+
+        // Load data on page load
+        window.onload = loadData;
+    </script>
+</body>
+</html>
