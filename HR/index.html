@@ -422,17 +422,16 @@
         }
 
 async function loadData() {
-    try {
-        console.log('Fetching deliveries from http://localhost:3000/api/deliveries');
-        const response = await fetch('http://localhost:3000/api/deliveries', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
-        console.log('Response status:', response.status, response.statusText);
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Failed to fetch deliveries: ${response.status} ${response.statusText} - ${errorText}`);
-        }
+try {
+    console.log('Fetching deliveries from http://localhost:3000/api/deliveries');
+    const response = await fetch('http://localhost:3000/api/deliveries', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch deliveries: ${response.status} ${response.statusText} - ${errorText}`);
+    }
         const data = await response.json();
         console.log('Response data:', data);
         
