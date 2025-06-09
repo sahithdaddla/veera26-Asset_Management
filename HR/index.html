@@ -300,6 +300,35 @@
                 width: 100%;
             }
         }
+        .pagination button {
+    padding: 8px 12px;
+    border: 1px solid var(--light-gray);
+    background-color: white;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    margin: 0 2px;
+    min-width: 36px;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: var(--light-color);
+}
+
+.pagination button.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination button i {
+    font-size: 0.8rem;
+}
     </style>
 </head>
 <body>
@@ -329,18 +358,20 @@
             </div>
         </div>
         
-        <table id="deliveries-table">
-            <thead>
-                <tr>
-                    <th>Employee Name</th>
-                    <th>Employee ID</th>
-                    <th>Department</th>
-                    <th>Assets</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+<div class="table-container">
+    <table id="deliveries-table">
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Employee ID</th>
+                <th>Department</th>
+                <th>Assets</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
         <div id="no-data-message" class="no-data" style="display: none;">
             <i class="fas fa-box-open"></i>
             <p>No asset delivery records found.</p>
@@ -351,290 +382,188 @@
         </div>
     </div>
     
-    <script>
-        // Sample data with provided names
-        const sampleData = [
-            {
-                employeeName: "Veera",
-                employeeId: "ATS0001",
-                department: "IT",
-                assets: ["Laptop", "Monitor", "Keyboard"],
-                timestamp: new Date("2023-05-15T09:30:00").getTime()
-            },
-            {
-                employeeName: "Raghava",
-                employeeId: "ATS0002",
-                department: "Associates",
-                assets: ["Laptop", "Laptop Charger"],
-                timestamp: new Date("2023-05-16T11:15:00").getTime()
-            },
-            {
-                employeeName: "Shravan",
-                employeeId: "ATS0003",
-                department: "Database",
-                assets: ["Laptop", "Mouse", "Headphones"],
-                timestamp: new Date("2023-05-17T14:45:00").getTime()
-            },
-            {
-                employeeName: "Srikanth",
-                employeeId: "ATS0004",
-                department: "HR",
-                assets: ["Laptop", "Monitor"],
-                timestamp: new Date("2023-05-18T10:00:00").getTime()
-            },
-            {
-                employeeName: "Pavan",
-                employeeId: "ATS0005",
-                department: "Associates",
-                assets: ["Laptop", "Laptop Bag"],
-                timestamp: new Date("2023-05-19T13:20:00").getTime()
-            }
-        ];
+<script>
+    // DOM elements
+const deliveriesTable = document.querySelector('#deliveries-table tbody');
+const noDataMessage = document.getElementById('no-data-message');
+const searchInput = document.getElementById('search-input');
+const departmentFilter = document.getElementById('department-filter');
+const sortBy = document.getElementById('sort-by');
+const pagination = document.getElementById('pagination');
 
-        // DOM elements
-        const deliveriesTable = document.querySelector('#deliveries-table tbody');
-        const noDataMessage = document.getElementById('no-data-message');
-        const searchInput = document.getElementById('search-input');
-        const departmentFilter = document.getElementById('department-filter');
-        const sortBy = document.getElementById('sort-by');
-        const pagination = document.getElementById('pagination');
+// Current state
+let allDeliveries = [];
+let filteredDeliveries = [];
 
-        // Current page state
-        let currentPage = 1;
-        const itemsPerPage = 5;
-        let allDeliveries = [];
-        let filteredDeliveries = [];
+// Validate and format name
+function validateAndFormatName(name) {
+  if (!name || typeof name !== 'string') return null;
+  let formattedName = name.replace(/[^a-zA-Z]/g, '').trim();
+  formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1).toLowerCase();
+  if (formattedName.length < 2 || formattedName.length > 20 || /\d/.test(formattedName)) {
+    return null;
+  }
+  return formattedName;
+}
 
-        // Validate and format name
-        function validateAndFormatName(name) {
-            if (!name || typeof name !== 'string') return null;
-            let formattedName = name.replace(/[^a-zA-Z]/g, '').trim();
-            formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1).toLowerCase();
-            if (formattedName.length < 2 || formattedName.length > 20 || /\d/.test(formattedName)) {
-                return null;
-            }
-            return formattedName;
-        }
-
-        // Validate employee ID
-        function validateEmployeeId(id) {
-            return id && typeof id === 'string' && /^ATS\d{4}$/.test(id);
-        }
+// Validate employee ID
+function validateEmployeeId(id) {
+  return id && typeof id === 'string' && /^ATS\d{4}$/.test(id);
+}
 
 async function loadData() {
-try {
-    console.log('Fetching deliveries from http://localhost:3000/api/deliveries');
-    const response = await fetch('http://localhost:3000/api/deliveries', {
+  try {
+    console.log('Fetching deliveries from http://localhost:3000/api/deliveries?all=true');
+    const response = await fetch('http://localhost:3000/api/deliveries?all=true', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
+
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Failed to fetch deliveries: ${response.status} ${response.statusText} - ${errorText}`);
+      throw new Error(`Failed to fetch deliveries: ${response.status} ${response.statusText}`);
     }
-        const data = await response.json();
-        console.log('Response data:', data);
-        
-        if (!data.deliveries || !Array.isArray(data.deliveries)) {
-            throw new Error('Invalid response format: deliveries array missing or not an array');
-        }
 
-        allDeliveries = data.deliveries
-            .filter(item => {
-                // Validate required fields
-                if (!item.employee_name || !item.employee_id || !item.department || !Array.isArray(item.assets)) {
-                    console.warn('Invalid delivery item:', item);
-                    return false;
-                }
-                return true;
-            })
-            .map(delivery => ({
-                employeeName: delivery.employee_name,
-                employeeId: delivery.employee_id,
-                department: delivery.department,
-                assets: delivery.assets,
-                timestamp: new Date(delivery.timestamp).getTime(),
-            }));
+    const data = await response.json();
+    console.log('Response data:', data);
 
-        if (allDeliveries.length === 0) {
-            showNoDataMessage('No valid delivery data found.');
-            return;
-        }
-
-        console.log('Processed allDeliveries:', allDeliveries);
-
-        // Populate department filter
-        populateDepartmentFilter(allDeliveries);
-        
-        // Filter and sort data
-        filterAndSortData();
-        
-    } catch (error) {
-        console.error('Error fetching data:', error.message);
-        showNoDataMessage(`Error loading data: ${error.message}`);
+    if (!data.deliveries || !Array.isArray(data.deliveries)) {
+      throw new Error('Invalid response format: deliveries array missing or not an array');
     }
+
+    // Accept all records without strict validation
+    allDeliveries = data.deliveries.map(delivery => ({
+      employeeName: delivery.employee_name || 'Unknown',
+      employeeId: delivery.employee_id || 'N/A',
+      department: delivery.department || 'Unassigned',
+      assets: Array.isArray(delivery.assets) ? delivery.assets : [],
+      timestamp: new Date(delivery.timestamp || Date.now()).getTime(),
+    }));
+
+    console.log('Processed allDeliveries:', allDeliveries);
+
+    // Populate department filter
+    populateDepartmentFilter(allDeliveries);
+
+    // Display all data
+    filterAndSortData();
+  } catch (error) {
+    console.error('Error fetching data:', error.message);
+    showNoDataMessage('Failed to load data from server. Please try again later.');
+  }
 }
-        function populateDepartmentFilter(deliveries) {
-            const departments = new Set();
-            deliveries.forEach(delivery => departments.add(delivery.department));
-            
-            departmentFilter.innerHTML = '<option value="">All Departments</option>';
-            departments.forEach(dept => {
-                const option = document.createElement('option');
-                option.value = dept;
-                option.textContent = dept;
-                departmentFilter.appendChild(option);
-            });
-        }
 
-        function filterAndSortData() {
-            const searchTerm = searchInput.value.toLowerCase();
-            filteredDeliveries = allDeliveries.filter(delivery => {
-                const matchesSearch = 
-                    delivery.employeeName.toLowerCase().includes(searchTerm) ||
-                    delivery.employeeId.toLowerCase().includes(searchTerm) ||
-                    delivery.department.toLowerCase().includes(searchTerm) ||
-                    delivery.assets.some(asset => asset.toLowerCase().includes(searchTerm));
-                
-                const matchesDepartment = 
-                    !departmentFilter.value || 
-                    delivery.department === departmentFilter.value;
-                
-                return matchesSearch && matchesDepartment;
-            });
-            
-            const sortValue = sortBy.value;
-            filteredDeliveries.sort((a, b) => {
-                switch (sortValue) {
-                    case 'timestamp-desc':
-                        return b.timestamp - a.timestamp;
-                    case 'timestamp-asc':
-                        return a.timestamp - b.timestamp;
-                    case 'name-asc':
-                        return a.employeeName.localeCompare(b.employeeName);
-                    case 'name-desc':
-                        return b.employeeName.localeCompare(a.employeeName);
-                    default:
-                        return 0;
-                }
-            });
-            
-            updatePagination();
-            displayCurrentPage();
-        }
+function populateDepartmentFilter(deliveries) {
+  const departments = new Set();
+  deliveries.forEach(delivery => departments.add(delivery.department));
 
-        function updatePagination() {
-            const totalPages = Math.ceil(filteredDeliveries.length / itemsPerPage);
-            pagination.innerHTML = '';
-            
-            if (totalPages <= 1) return;
-            
-            const prevButton = document.createElement('button');
-            prevButton.innerHTML = '«';
-            prevButton.disabled = currentPage === 1;
-            prevButton.addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    displayCurrentPage();
-                    updatePagination();
-                }
-            });
-            pagination.appendChild(prevButton);
-            
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.textContent = i;
-                pageButton.className = currentPage === i ? 'active' : '';
-                pageButton.addEventListener('click', () => {
-                    currentPage = i;
-                    displayCurrentPage();
-                    updatePagination();
-                });
-                pagination.appendChild(pageButton);
-            }
-            
-            const nextButton = document.createElement('button');
-            nextButton.innerHTML = '»';
-            nextButton.disabled = currentPage === totalPages;
-            nextButton.addEventListener('click', () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    displayCurrentPage();
-                    updatePagination();
-                }
-            });
-            pagination.appendChild(nextButton);
-        }
+  departmentFilter.innerHTML = '<option value="">All Departments</option>';
+  departments.forEach(dept => {
+    const option = document.createElement('option');
+    option.value = dept;
+    option.textContent = dept;
+    departmentFilter.appendChild(option);
+  });
+}
 
-        function displayCurrentPage() {
-            deliveriesTable.innerHTML = '';
-            
-            if (filteredDeliveries.length === 0) {
-                showNoDataMessage('No matching records found.');
-                return;
-            }
-            
-            noDataMessage.style.display = 'none';
-            
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = Math.min(startIndex + itemsPerPage, filteredDeliveries.length);
-            
-            for (let i = startIndex; i < endIndex; i++) {
-                const delivery = filteredDeliveries[i];
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>${delivery.employeeName}</td>
-                    <td>${delivery.employeeId}</td>
-                    <td>${delivery.department}</td>
-                    <td>
-                        ${delivery.assets.map(asset => 
-                            `<span class="asset-tag">${asset}</span>`
-                        ).join('')}
-                    </td>
-                    <td>${formatDate(new Date(delivery.timestamp))}</td>
-                `;
-                
-                deliveriesTable.appendChild(row);
-            }
-        }
+function filterAndSortData() {
+  const searchTerm = searchInput.value.toLowerCase();
+  filteredDeliveries = allDeliveries.filter(delivery => {
+    const matchesSearch =
+      (delivery.employeeName && delivery.employeeName.toLowerCase().includes(searchTerm)) ||
+      (delivery.employeeId && delivery.employeeId.toLowerCase().includes(searchTerm)) ||
+      (delivery.department && delivery.department.toLowerCase().includes(searchTerm)) ||
+      (delivery.assets &&
+        delivery.assets.some(asset =>
+          asset && typeof asset === 'string' && asset.toLowerCase().includes(searchTerm)
+        ));
 
-        function formatDate(date) {
-            if (isNaN(date.getTime())) return 'Invalid Date';
-            return date.toLocaleString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
+    const matchesDepartment = !departmentFilter.value || delivery.department === departmentFilter.value;
 
-        function showNoDataMessage(message) {
-            noDataMessage.style.display = 'block';
-            noDataMessage.querySelector('p').textContent = message;
-            deliveriesTable.innerHTML = '';
-            pagination.innerHTML = '';
-        }
+    return matchesSearch && matchesDepartment;
+  });
 
-        // Event listeners
-        searchInput.addEventListener('input', () => {
-            currentPage = 1;
-            filterAndSortData();
-        });
-        
-        departmentFilter.addEventListener('change', () => {
-            currentPage = 1;
-            filterAndSortData();
-        });
-        
-        sortBy.addEventListener('change', () => {
-            currentPage = 1;
-            filterAndSortData();
-        });
+  const sortValue = sortBy.value;
+  filteredDeliveries.sort((a, b) => {
+    switch (sortValue) {
+      case 'timestamp-desc':
+        return b.timestamp - a.timestamp;
+      case 'timestamp-asc':
+        return a.timestamp - b.timestamp;
+      case 'name-asc':
+        return a.employeeName.localeCompare(b.employeeName);
+      case 'name-desc':
+        return b.employeeName.localeCompare(a.employeeName);
+      default:
+        return 0;
+    }
+  });
 
-        // Load data on page load
-        window.onload = loadData;
-    </script>
+  displayAllRecords();
+}
+
+function displayAllRecords() {
+  deliveriesTable.innerHTML = '';
+
+  if (filteredDeliveries.length === 0) {
+    showNoDataMessage('No matching records found.');
+    return;
+  }
+
+  noDataMessage.style.display = 'none';
+  pagination.style.display = 'none'; // Hide pagination completely
+
+  // Display all records
+  filteredDeliveries.forEach(delivery => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${delivery.employeeName}</td>
+      <td>${delivery.employeeId}</td>
+      <td>${delivery.department}</td>
+      <td>
+        ${delivery.assets
+          .map(asset => `<span class="asset-tag">${asset || 'Unknown'}</span>`)
+          .join('')}
+      </td>
+      <td>${formatDate(new Date(delivery.timestamp))}</td>
+    `;
+    deliveriesTable.appendChild(row);
+  });
+}
+
+function formatDate(date) {
+  if (isNaN(date.getTime())) return 'Invalid Date';
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Asia/Kolkata',
+  });
+}
+
+function showNoDataMessage(message) {
+  noDataMessage.style.display = 'block';
+  noDataMessage.querySelector('p').textContent = message;
+  deliveriesTable.innerHTML = '';
+  pagination.style.display = 'none';
+}
+
+// Event listeners
+searchInput.addEventListener('input', () => {
+  filterAndSortData();
+});
+
+departmentFilter.addEventListener('change', () => {
+  filterAndSortData();
+});
+
+sortBy.addEventListener('change', () => {
+  filterAndSortData();
+});
+
+// Load data on page load
+window.onload = loadData;
+</script>
 </body>
 </html>

@@ -5,401 +5,449 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <title>Asset Management - HR</title>
-    <style>
-        :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --danger: #f72585;
-            --warning: #f8961e;
-            --info: #4895ef;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.15);
-            --radius: 8px;
-            --radius-sm: 4px;
-            --transition: all 0.3s ease;
-        }
+<style>
+    :root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #3f37c9;
+    --success: #4cc9f0;
+    --danger: #f72585;
+    --warning: #f8961e;
+    --info: #4895ef;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.15);
+    --radius: 8px;
+    --radius-sm: 4px;
+    --transition: all 0.3s ease;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        body {
-            background-color: #f5f7fa;
-            color: var(--dark);
-            line-height: 1.6;
-        }
+body {
+    background-color: #f5f7fa;
+    color: var(--dark);
+    line-height: 1.6;
+}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-        header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
-            color: var(--white);
-            padding: 2rem 1rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
+header {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: var(--white);
+    padding: 2rem 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    border-radius: 0 0 var(--radius) var(--radius);
+}
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
 
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 0;
-            margin-bottom: 1.5rem;
-        }
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+}
 
-        .heading-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+.heading-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
 
-        .heading-container h2 {
-            color: var(--primary);
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin: 0;
-        }
+.heading-container h2 {
+    color: var(--primary);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0;
+}
 
-        .search-bar {
-            position: relative;
-            flex-grow: 1;
-            max-width: 400px;
-            margin: 0 1rem;
-        }
+.search-bar {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px;
+    margin: 0 1rem;
+}
 
-        .search-bar input {
-            width: 100%;
-            padding: 0.75rem 1rem 0.75rem 2.5rem;
-            border: 1px solid var(--light-gray);
-            border-radius: var(--radius);
-            font-size: 1rem;
-            outline: none;
-            transition: var(--transition);
-            background-color: var(--white);
-        }
+.search-bar input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    outline: none;
+    transition: var(--transition);
+    background-color: var(--white);
+}
 
-        .search-bar input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-        }
+.search-bar input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
 
-        .search-bar i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
+.search-bar i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray);
+}
 
-        .requests-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.requests-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-        .requests-btn:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
+.requests-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
 
-        .asset-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
+.asset-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
 
-        .asset-card {
-            background-color: var(--white);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border-left: 4px solid var(--primary);
-            position: relative;
-            overflow: hidden;
-        }
+.asset-card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-left: 4px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 300px;
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
 
-        .asset-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
-        }
+.asset-card-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-right: -5px;
+}
 
-        .asset-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.75rem;
-            font-size: 1.25rem;
-        }
+.asset-card-content::-webkit-scrollbar {
+    width: 5px;
+}
 
-        .asset-card p {
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
+.asset-card-content::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 10px;
+}
 
-        .asset-card p strong {
-            color: var(--gray);
-            font-weight: 500;
-        }
+.asset-card-content::-webkit-scrollbar-thumb {
+    background: var(--gray);
+    border-radius: 10px;
+}
 
-        .status-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: var(--radius-sm);
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+.asset-card-content::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
 
-        .status-assigned {
-            background-color: rgba(76, 201, 240, 0.1);
-            color: var(--info);
-        }
+.asset-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
 
-        .status-rejected {
-            background-color: rgba(247, 37, 133, 0.1);
-            color: var(--danger);
-        }
+.asset-card h3 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+}
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease-out;
-        }
+.asset-card p {
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+.asset-card p strong {
+    color: var(--gray);
+    font-weight: 500;
+}
 
-        .modal-content {
-            background-color: var(--white);
-            margin: 10% auto;
-            padding: 2rem;
-            border-radius: var(--radius);
-            width: 90%;
-            max-width: 600px;
-            box-shadow: var(--shadow-md);
-            animation: slideDown 0.3s ease-out;
-        }
+.status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
 
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+.status-assigned {
+    background-color: rgba(76, 201, 240, 0.1);
+    color: var(--info);
+}
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-        }
+.status-rejected {
+    background-color: rgba(247, 37, 133, 0.1);
+    color: var(--danger);
+}
 
-        .modal-header h2 {
-            color: var(--primary);
-            margin: 0;
-        }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease-out;
+}
 
-        .close {
-            color: var(--gray);
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-        .close:hover {
-            color: var(--danger);
-        }
+.modal-content {
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    box-shadow: var(--shadow-md);
+    animation: slideDown 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+    overflow-y: auto;
+}
 
-        .request-details {
-            margin-bottom: 1.5rem;
-        }
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
 
-        .request-details p {
-            margin-bottom: 0.75rem;
-        }
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--light-gray);
+}
 
-        .request-details strong {
-            color: var(--gray);
-            font-weight: 500;
-            display: inline-block;
-            width: 120px;
-        }
+.modal-header h2 {
+    color: var(--primary);
+    margin: 0;
+}
 
-        .request-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
+.close {
+    color: var(--gray);
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+}
 
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+.close:hover {
+    color: var(--danger);
+}
 
-        .approve-btn {
-            background-color: var(--success);
-            color: var(--white);
-        }
+.request-details {
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
 
-        .approve-btn:hover {
-            background-color: #3aa8d8;
-            transform: translateY(-2px);
-        }
+.request-details p {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-start;
+}
 
-        .reject-btn {
-            background-color: var(--danger);
-            color: var(--white);
-        }
+.request-details strong {
+    flex: 0 0 120px;
+    color: var(--gray);
+    font-weight: 500;
+}
 
-        .reject-btn:hover {
-            background-color: #e5177b;
-            transform: translateY(-2px);
-        }
+.request-details span {
+    flex: 1;
+    word-break: break-word;
+}
 
-        .no-results {
-            text-align: center;
-            padding: 2rem;
-            color: var(--gray);
-            grid-column: 1 / -1;
-        }
+#modal-asset-reason {
+    display: block;
+    max-height: 100px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    background-color: var(--light-gray);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem;
+}
 
-        .navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
+.request-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
 
-        .nav-btn {
-            padding: 0.5rem 1rem;
-            border-radius: var(--radius-sm);
-            background-color: var(--light-gray);
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-        .nav-btn:hover {
-            background-color: var(--primary);
-            color: var(--white);
-        }
+.approve-btn {
+    background-color: var(--success);
+    color: var(--white);
+}
 
-        .nav-btn:disabled {
-            background-color: var(--light-gray);
-            color: var(--gray);
-            cursor: not-allowed;
-        }
+.approve-btn:hover {
+    background-color: #3aa8d8;
+    transform: translateY(-2px);
+}
 
-        @media (max-width: 768px) {
-            .heading-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
+.reject-btn {
+    background-color: var(--danger);
+    color: var(--white);
+}
 
-            .search-bar {
-                max-width: 100%;
-                margin: 0.5rem 0;
-            }
+.reject-btn:hover {
+    background-color: #e5177b;
+    transform: translateY(-2px);
+}
 
-            .requests-btn {
-                width: 100%;
-                justify-content: center;
-            }
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray);
+    grid-column: 1 / -1;
+}
 
-            .asset-section {
-                grid-template-columns: 1fr;
-            }
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
 
-            .modal-content {
-                margin: 20% auto;
-                width: 95%;
-            }
-        }
+.nav-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--light-gray);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.nav-btn:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
 
-        .asset-card {
-            animation: fadeInUp 0.5s ease-out forwards;
-            opacity: 0;
-        }
+.nav-btn:disabled {
+    background-color: var(--light-gray);
+    color: var(--gray);
+    cursor: not-allowed;
+}
 
-        .asset-card:nth-child(1) { animation-delay: 0.1s; }
-        .asset-card:nth-child(2) { animation-delay: 0.2s; }
-        .asset-card:nth-child(3) { animation-delay: 0.3s; }
-        .asset-card:nth-child(4) { animation-delay: 0.4s; }
-        .asset-card:nth-child(5) { animation-delay: 0.5s; }
-        .asset-card:nth-child(6) { animation-delay: 0.6s; }
-    </style>
+@media (max-width: 768px) {
+    .heading-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-bar {
+        max-width: 100%;
+        margin: 0.5rem 0;
+    }
+
+    .requests-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .asset-section {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        margin: 20% auto;
+        width: 95%;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.asset-card:nth-child(1) { animation-delay: 0.1s; }
+.asset-card:nth-child(2) { animation-delay: 0.2s; }
+.asset-card:nth-child(3) { animation-delay: 0.3s; }
+.asset-card:nth-child(4) { animation-delay: 0.4s; }
+.asset-card:nth-child(5) { animation-delay: 0.5s; }
+.asset-card:nth-child(6) { animation-delay: 0.6s; }
+</style>
 </head>
 <body>  
     <header>
@@ -450,17 +498,14 @@
         </div>
         
         <div class="asset-section" id="assignedAssets">
-            <!-- Asset cards will be dynamically added here -->
         </div>
 
         <h2><i class="fas fa-times-circle"></i> Rejected Requests</h2>
         <div class="asset-section" id="rejectedRequests">
-            <!-- Rejected request cards will be dynamically added here -->
         </div>
     </div>
 
     <script>
-        // Initialize in-memory data
         let assignedAssets = [
             {
                 employeeName: "Veera Raghava",
@@ -493,7 +538,6 @@
         let rejectedRequests = [];
         let requests = [];
 
-        // Initialize modal elements and event listeners
         const modal = document.getElementById("requestModal");
         const btn = document.getElementById("requestButton");
         const closeBtn = document.getElementById("closeModal");
@@ -532,7 +576,6 @@
             }
         };
 
-        // Load request data
 async function loadRequestData() {
   try {
     const response = await fetch('http://localhost:3000/api/requests');
@@ -565,7 +608,6 @@ async function loadRequestData() {
   }
 }
 
-        // Display a specific request
         function displayRequest(index) {
             const requestData = requests[index];
             document.getElementById('modal-emp-name').textContent = requestData.employee_name || "No Name";
@@ -574,20 +616,17 @@ async function loadRequestData() {
             document.getElementById('modal-asset-reason').textContent = requestData.reason || "No reason provided";
             document.getElementById('modal-timestamp').textContent = formatDate(requestData.timestamp) || "N/A";
 
-            // Update navigation
             prevRequestBtn.disabled = index === 0;
             nextRequestBtn.disabled = index === requests.length - 1;
             requestIndexDisplay.textContent = `${index + 1} of ${requests.length}`;
         }
 
-        // Load assigned and rejected assets on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadAssignedAssets();
             loadRejectedRequests();
             loadRequestData();
         });
 
-        // Function to load assigned assets
 async function loadAssignedAssets() {
     const assetsContainer = document.getElementById('assignedAssets');
     
@@ -627,7 +666,6 @@ async function loadAssignedAssets() {
     }
 }
 
-        // Function to load rejected requests
 async function loadRejectedRequests() {
     const rejectedContainer = document.getElementById('rejectedRequests');
     
@@ -658,7 +696,6 @@ async function loadRejectedRequests() {
                 <p><strong>Emp ID:</strong> ${request.employee_id}</p>
                 <p><strong>Asset:</strong> ${request.asset_name}</p>
                 <p><strong>Rejected:</strong> ${request.rejectedDate}</p>
-                <p><strong>Reason:</strong> ${request.reason}</p>
             `;
             rejectedContainer.appendChild(requestCard);
         });
@@ -668,14 +705,12 @@ async function loadRejectedRequests() {
     }
 }
 
-        // Format date for display
         function formatDate(dateString) {
             if (!dateString) return 'N/A';
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
 
-        // Approve request function with duplicate check
    async function approveRequest() {
     if (requests.length === 0 || !requests[currentRequestIndex]) {
         showToast('No request data found', 'error');
@@ -710,7 +745,6 @@ async function loadRejectedRequests() {
     }
 }
 
-        // Reject request function
 async function rejectRequest() {
     if (requests.length === 0 || !requests[currentRequestIndex]) {
         showToast('No request data found', 'error');
@@ -742,7 +776,6 @@ async function rejectRequest() {
     }
 }
 
-        // Search functionality
         function searchAssets() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const assetCards = document.querySelectorAll('#assignedAssets .asset-card, #rejectedRequests .asset-card');
@@ -777,7 +810,6 @@ async function rejectRequest() {
             }
         }
 
-        // Show toast notification
         function showToast(message, type) {
             const toast = document.createElement('div');
             toast.style.position = 'fixed';

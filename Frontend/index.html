@@ -16,14 +16,14 @@
             --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-
+    
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+    
         body {
             background-color: #f5f7fa;
             display: flex;
@@ -33,7 +33,7 @@
             padding: 20px;
             color: var(--dark-color);
         }
-
+    
         header {
             width: 100%;
             max-width: 1200px;
@@ -83,30 +83,30 @@
                 font-size: 1rem;
             }
         }
-
+    
         .form-container {
             background-color: white;
             width: 100%;
-            max-width: 1000px;
-            padding: 30px;
+            max-width: 800px;
+            padding: 10px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             margin-bottom: 30px;
         }
-
+    
         .form-row {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             margin-bottom: 20px;
         }
-
+    
         .form-group {
             flex: 1 1 calc(50% - 20px);
             min-width: 250px;
             margin-bottom: 15px;
         }
-
+    
         label {
             display: block;
             margin-bottom: 8px;
@@ -114,7 +114,7 @@
             font-weight: 500;
             color: #1a252f;
         }
-
+    
         input, select, textarea {
             width: 100%;
             padding: 12px;
@@ -123,20 +123,20 @@
             font-size: 1rem;
             transition: var(--transition);
         }
-
+    
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
-
+    
         .asset-group {
             background-color: #f8f9fa;
             padding: 20px;
             border-radius: var(--border-radius);
             margin: 25px 0;
         }
-
+    
         .asset-group label {
             display: flex;
             align-items: center;
@@ -146,24 +146,24 @@
             padding: 8px;
             border-radius: 4px;
         }
-
+    
         .asset-group label:hover {
             background-color: rgba(52, 152, 219, 0.1);
         }
-
+    
         .asset-group input[type="checkbox"] {
             width: auto;
             margin-right: 10px;
             accent-color: var(--secondary-color);
         }
-
+    
         .button-group {
             display: flex;
             justify-content: space-between;
             gap: 15px;
             margin-top: 30px;
         }
-
+    
         .btn {
             padding: 12px 24px;
             border-radius: var(--border-radius);
@@ -175,38 +175,38 @@
             flex: 1;
             text-align: center;
         }
-
+    
         .btn-submit {
             background-color: var(--secondary-color);
             color: white;
         }
-
+    
         .btn-submit:hover {
             background-color: #2980b9;
             transform: translateY(-2px);
         }
-
+    
         .btn-request {
             background-color: var(--primary-color);
             color: white;
         }
-
+    
         .btn-request:hover {
             background-color: #1a252f;
             transform: translateY(-2px);
         }
-
+    
         .btn-clear {
             background-color: white;
             color: var(--accent-color);
             border: 1px solid var(--accent-color);
         }
-
+    
         .btn-clear:hover {
             background-color: #fdf2f2;
             transform: translateY(-2px);
         }
-
+    
         .error-message {
             color: var(--accent-color);
             font-size: 0.85rem;
@@ -214,7 +214,7 @@
             display: block;
             min-height: 20px;
         }
-
+    
         .modal {
             display: none;
             position: fixed;
@@ -228,21 +228,17 @@
             z-index: 1000;
             backdrop-filter: blur(3px);
         }
-
-        .modal.show {
-            display: flex;
-        }
-
+    
         .modal-content {
             background-color: white;
-            padding: 30px;
+            padding: 20px;
             width: 100%;
             max-width: 500px;
             border-radius: var(--border-radius);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             animation: modalFadeIn 0.3s ease-out;
         }
-
+    
         @keyframes modalFadeIn {
             from {
                 opacity: 0;
@@ -253,7 +249,7 @@
                 transform: translateY(0);
             }
         }
-
+    
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -262,12 +258,12 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
         }
-
+    
         .modal-header h3 {
             color: var(--primary-color);
             font-size: 1.5rem;
         }
-
+    
         .modal-close {
             background: none;
             border: none;
@@ -275,19 +271,19 @@
             cursor: pointer;
             color: #7f8c8d;
         }
-
+    
         .modal-footer {
             display: flex;
             justify-content: flex-end;
             gap: 15px;
             margin-top: 20px;
         }
-
+    
         textarea {
             resize: none;
             min-height: 100px;
         }
-
+    
         @media (max-width: 768px) {
             .form-group {
                 flex: 1 1 100%;
@@ -301,35 +297,36 @@
                 font-size: 1.8rem;
             }
         }
+        .success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--success-color);
+    color: white;
+    padding: 15px 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    z-index: 1001;
+    display: none;
+    animation: slideIn 0.3s ease-out;
+}
 
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            min-width: 200px;
-            padding: 15px;
-            border-radius: var(--border-radius);
-            color: white;
-            font-size: 14px;
-            box-shadow: var(--box-shadow);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: var(--transition);
-            z-index: 1000;
-        }
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
 
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .toast.success {
-            background-color: var(--success-color);
-        }
-
-        .toast.error {
-            background-color: var(--accent-color);
-        }
+.success-message.show {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+}
+        
     </style>
 </head>
 <body>
@@ -340,25 +337,25 @@
         </div>
     </header>
     <div class="form-container">
-        <form onsubmit="return handleFormSubmission()">
+        <form onsubmit="handleFormSubmission()">
             <div class="form-row">
                 <div class="form-group">
                     <label for="emp-name">Employee Name</label>
                     <input type="text" id="emp-name" name="emp-name" required 
-                           pattern="^[A-Za-z][a-zA-Z ]{3,29}$" 
-                           minlength="4" maxlength="30"  
-                           title="Name must be 4-30 characters, start with a letter, and contain only letters and spaces"
-                           oninput="validateName()" onblur="validateName()">
-                    <span id="name-error" class="error-message"></span>
+                    pattern="^[A-Za-z][a-zA-Z ]{3,29}$" 
+                    minlength="2" maxlength="30"  
+                    title="Name must be 4-30 characters, start with a letter, and contain only letters and spaces"
+                    oninput="validateName()" onblur="validateName()">
+                    <span id="name-error" style="color: red; font-size: 0.9em;"></span>
                 </div>
                 <div class="form-group">
                     <label for="emp-id">Employee ID</label>
                     <input type="text" id="emp-id" name="emp-id" required 
-                           pattern="^ATS0(?!000)\d{3}$" 
-                           title="Employee ID must start with ATS followed by 0 and 3 digits (e.g., ATS0123)."
-                           oninput="validateEmployeeID()" onblur="validateEmployeeID()">
-                    <span id="id-error" class="error-message"></span>
+                    pattern="^ATS0(?!000)\d{3}$" 
+                           title="Employee ID must start with ATS letters followed by 0 and 3 numbers." oninput="validateEmployeeID()" onblur="validateEmployeeID()">
+                    <span id="id-error" style="color: red; font-size: 0.9em;"></span>
                 </div>
+                
                 <div class="form-group">
                     <label for="department">Department</label>
                     <select id="department" name="department" required>
@@ -381,140 +378,96 @@
             </div>
             <div class="button-group">
                 <button type="submit" class="btn btn-submit">Submit</button>
-                <button type="button" class="btn btn-request" onclick="openModal()">Request Additional Assets</button>
+                <button type="button" class="btn btn-submit" onclick="openModal()">Request Additional Assets</button>
                 <button type="reset" class="btn btn-clear">Clear</button>
             </div>
         </form>
     </div>
-    <div class="modal" id="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div class="modal" id="modal" role="dialog" aria-labelledby="modal-title">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">Request Additional Asset</h3>
-                <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
-            </div>
-            <form id="asset-request-form" onsubmit="return submitRequest();">
+            <h3 id="modal-title" style="color: blue;">Request Additional Asset</h3>
+            <form id="asset-request-form" onsubmit="submitRequest();">
                 <div class="form-group">
                     <label for="modal-emp-name">Employee Name</label>
                     <input type="text" id="modal-emp-name" name="modal-emp-name" required 
-                           pattern="^[A-Za-z][a-zA-Z ]{3,29}$" 
-                           minlength="4" maxlength="30"  
-                           title="Name must be 4-30 characters, start with a letter, and contain only letters and spaces"
-                           oninput="validateModalName()" onblur="validateModalName()">
-                    <span id="modal-name-error" class="error-message"></span>
+                    pattern="^[A-Za-z][a-zA-Z ]{3,29}$" 
+                    minlength="2" maxlength="30"  
+                    title="Name must be 4-30 characters, start with a letter, and contain only letters and spaces"
+                    oninput="validateModalName()" onblur="validateModalName()">
+                    <span id="modal-name-error" style="color: red; font-size: 0.9em;"></span>
                 </div>
                 <div class="form-group">
                     <label for="modal-emp-id">Employee ID</label>
                     <input type="text" id="modal-emp-id" name="modal-emp-id" required 
-                           pattern="^ATS0(?!000)\d{3}$"  
-                           title="Employee ID must start with ATS followed by 0 and 3 digits (e.g., ATS0123)."
-                           oninput="validateModalEmployeeID()" onblur="validateModalEmployeeID()">
-                    <span id="modal-id-error" class="error-message"></span>
+                    pattern="^ATS0(?!000)\d{3}$"  
+                           title="Employee ID must start with ATS letters followed by 0 and 3 numbers." oninput="validateModalEmployeeID()" onblur="validateModalEmployeeID()">
+                    <span id="modal-id-error" style="color: red; font-size: 0.9em;"></span>
                 </div>
+                
                 <div class="form-group">
                     <label for="additional-asset">Asset Name</label>
                     <input type="text" id="additional-asset" name="additional-asset" required 
-                           maxlength="100"
-                           pattern="^[A-Za-z0-9\s]{3,50}$" 
-                           title="Asset Name must be 3-50 characters and contain only letters, numbers, and spaces."
-                           oninput="validateAssetName()" onblur="validateAssetName()">
-                    <span id="asset-name-error" class="error-message"></span>
+                    maxlength="30"
+                           pattern="^[A-Za-z0-9\s]{3,30}$" 
+                           title="Asset Name must be at least 3 characters long and contain only letters, numbers, and spaces." oninput="validateAssetName()" onblur="validateAssetName()">
+                    <span id="asset-name-error" style="color: red; font-size: 0.9em;"></span>
                 </div>
                 <div class="form-group">
                     <label for="reason">Reason for Request</label>
                     <textarea id="reason" name="reason" rows="4" required
                               minlength="10" maxlength="500" 
-                              pattern="^[a-zA-Z0-9\s.,!?';:-]{10,500}$"
-                              title="Reason must be 10-500 characters with letters, numbers, spaces, and basic punctuation."
+                              title="Reason must be 10-500 characters with only letters, numbers, spaces, and basic punctuation."
                               oninput="validateReason()" 
                               onblur="validateReason()"></textarea>
-                    <span id="reason-error" class="error-message"></span>
+                    <span id="reason-error" style="color: red; font-size: 0.9em;"></span>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-submit">Submit Request</button>
-                    <button type="button" class="btn btn-clear" onclick="closeModal()">Close</button>
-                </div>
+                <button type="submit" class="btn btn-submit" style="margin-bottom: 10px;">Submit Request</button>
+                <button type="button" class="btn btn-clear" onclick="closeModal()">Close</button>
             </form>
         </div>
     </div>
-    <div id="toast" class="toast" role="alert" aria-live="polite"></div>
-
+    <div id="success-message" class="success-message"></div>
     <script>
-        // Toast Notification Function
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast ${type}`;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Modal Handling with Focus Trapping
         function openModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.add('show');
-            modal.style.display = 'flex';
-            const firstInput = modal.querySelector('input');
-            firstInput.focus();
-            modal.addEventListener('keydown', trapFocus);
-            document.addEventListener('keydown', handleEsc);
+            document.getElementById("modal").style.display = "flex";
         }
 
         function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('show');
-            modal.style.display = 'none';
-            modal.removeEventListener('keydown', trapFocus);
-            document.removeEventListener('keydown', handleEsc);
-            document.querySelector('.btn-request').focus();
-        }
-
-        function handleEsc(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        }
-
-        function trapFocus(e) {
-            const modal = document.getElementById('modal');
-            const focusableElements = modal.querySelectorAll('input, textarea, button');
-            const firstElement = focusableElements[0];
-            const lastElement = focusableElements[focusableElements.length - 1];
-
-            if (e.key === 'Tab') {
-                if (e.shiftKey && document.activeElement === firstElement) {
-                    e.preventDefault();
-                    lastElement.focus();
-                } else if (!e.shiftKey && document.activeElement === lastElement) {
-                    e.preventDefault();
-                    firstElement.focus();
-                }
-            }
+            document.getElementById("modal").style.display = "none";
         }
 
         function validateName() {
             const nameInput = document.getElementById('emp-name');
             const errorMessage = document.getElementById('name-error');
             const value = nameInput.value;
+            
+            // Strict validation - doesn't auto-correct, just rejects
             const regex = /^[A-Za-z]+( [A-Za-z]+)*$/;
-
+            
+            // Check for leading/trailing spaces
             if (value !== value.trim()) {
                 errorMessage.textContent = "No leading or trailing spaces allowed.";
                 return false;
             }
+            
+            // Check for multiple spaces
             if (/\s{2,}/.test(value)) {
                 errorMessage.textContent = "Only one space allowed between words.";
                 return false;
             }
+            
+            // Check basic pattern
             if (!regex.test(value)) {
-                errorMessage.textContent = "Name must contain only letters and single spaces.";
+                errorMessage.textContent = "Name must start with letter, contain only letters and single spaces between words.";
                 return false;
             }
-            if (value.length < 4 || value.length > 30) {
-                errorMessage.textContent = "Name must be 4-30 characters long.";
+            
+            // Check length
+            if (value.length < 2 || value.length > 30) {
+                errorMessage.textContent = "Name must be 2-30 characters long.";
                 return false;
             }
+            
             errorMessage.textContent = "";
             return true;
         }
@@ -523,24 +476,34 @@
             const nameInput = document.getElementById('modal-emp-name');
             const errorMessage = document.getElementById('modal-name-error');
             const value = nameInput.value;
+            
+            // Strict validation - doesn't auto-correct, just rejects
             const regex = /^[A-Za-z]+( [A-Za-z]+)*$/;
-
+            
+            // Check for leading/trailing spaces
             if (value !== value.trim()) {
                 errorMessage.textContent = "No leading or trailing spaces allowed.";
                 return false;
             }
+            
+            // Check for multiple spaces
             if (/\s{2,}/.test(value)) {
                 errorMessage.textContent = "Only one space allowed between words.";
                 return false;
             }
+            
+            // Check basic pattern
             if (!regex.test(value)) {
-                errorMessage.textContent = "Name must contain only letters and single spaces.";
+                errorMessage.textContent = "Name must start with letter, contain only letters and single spaces between words.";
                 return false;
             }
-            if (value.length < 4 || value.length > 30) {
-                errorMessage.textContent = "Name must be 4-30 characters long.";
+            
+            // Check length
+            if (value.length < 2 || value.length > 30) {
+                errorMessage.textContent = "Name must be 2-30 characters long.";
                 return false;
             }
+            
             errorMessage.textContent = "";
             return true;
         }
@@ -551,11 +514,12 @@
             const regex = /^ATS0(?!000)\d{3}$/;
 
             if (!empIdInput.value.match(regex)) {
-                errorMessage.textContent = "Employee ID must be ATS0 followed by 3 digits (e.g., ATS0123).";
+                errorMessage.textContent = "Employee ID must start ATS letters followed by 0 and 3 numbers.";
                 return false;
+            } else {
+                errorMessage.textContent = "";
+                return true;
             }
-            errorMessage.textContent = "";
-            return true;
         }
 
         function validateModalEmployeeID() {
@@ -564,77 +528,94 @@
             const regex = /^ATS0(?!000)\d{3}$/;
 
             if (!empIdInput.value.match(regex)) {
-                errorMessage.textContent = "Employee ID must be ATS0 followed by 3 digits (e.g., ATS0123).";
+                errorMessage.textContent = "Employee ID must start with ATS followed by 0 and 3 numbers.";
                 return false;
+            } else {
+                errorMessage.textContent = "";
+                return true;
             }
-            errorMessage.textContent = "";
-            return true;
         }
 
         function validateAssetName() {
             const assetNameInput = document.getElementById('additional-asset');
             const errorMessage = document.getElementById('asset-name-error');
-            const regex = /^[A-Za-z0-9\s]{3,50}$/;
+
+            const regex = /^[A-Za-z\s]{3,30}$/;
 
             if (!assetNameInput.value.match(regex)) {
-                errorMessage.textContent = "Asset Name must be 3-50 characters, letters, numbers, or spaces.";
+                errorMessage.textContent = "Asset Name must be at least 3 characters long and contain only letters, and spaces.";
                 return false;
+            } else {
+                errorMessage.textContent = "";
+                return true;
             }
-            errorMessage.textContent = "";
-            return true;
         }
-
+        
         function validateReason() {
             const reasonInput = document.getElementById('reason');
             const errorElement = document.getElementById('reason-error');
             const value = reasonInput.value;
             const minLength = 10;
             const maxLength = 500;
-            const regex = /^[a-zA-Z0-9\s.,!?';:-]+$/;
-
+            
+            // Check for leading/trailing spaces
             if (value !== value.trim()) {
                 errorElement.textContent = "No leading or trailing spaces allowed.";
                 return false;
             }
+            
+            // Check for multiple spaces
             if (/\s{2,}/.test(value)) {
                 errorElement.textContent = "Only one space allowed between words.";
                 return false;
             }
-            if (value === '') {
+            
+            // Check empty
+            if (reasonInput.required && value === '') {
                 errorElement.textContent = 'Reason is required.';
                 return false;
             }
+            
+            // Check length
             if (value.length < minLength) {
-                errorElement.textContent = `Reason must be at least ${minLength} characters.`;
+                errorElement.textContent = `Reason must be at least ${minLength} characters long.`;
                 return false;
             }
+            
             if (value.length > maxLength) {
                 errorElement.textContent = `Reason cannot exceed ${maxLength} characters.`;
                 return false;
             }
-            if (!regex.test(value)) {
-                errorElement.textContent = 'Only letters, numbers, spaces, and basic punctuation allowed.';
+            
+            // Check valid characters
+            const allowedCharsPattern = /^[a-zA-Z0-9\s.,!?';:-]+$/;
+            if (!allowedCharsPattern.test(value)) {
+                errorElement.textContent = 'Contains invalid characters. Only letters, numbers, spaces, and basic punctuation allowed.';
                 return false;
             }
+            
             errorElement.textContent = "";
             return true;
         }
 
-        // Prevent Space Key Abuse
+        // Update event handlers to prevent space key abuse
         document.getElementById('emp-name').addEventListener('keydown', function(e) {
-            if (e.key === ' ' && (this.selectionStart === 0 || this.value.endsWith(' '))) {
+            if (e.key === ' ' && (this.selectionStart === 0 || 
+                                 this.value.endsWith(' '))) {
                 e.preventDefault();
             }
         });
 
         document.getElementById('modal-emp-name').addEventListener('keydown', function(e) {
-            if (e.key === ' ' && (this.selectionStart === 0 || this.value.endsWith(' '))) {
+            if (e.key === ' ' && (this.selectionStart === 0 || 
+                                 this.value.endsWith(' '))) {
                 e.preventDefault();
             }
         });
 
         document.getElementById('reason').addEventListener('keydown', function(e) {
-            if (e.key === ' ' && (this.selectionStart === 0 || this.value.endsWith(' '))) {
+            if (e.key === ' ' && (this.selectionStart === 0 || 
+                                 this.value.endsWith(' '))) {
                 e.preventDefault();
             }
         });
@@ -642,71 +623,101 @@
         function validateAssets() {
             const checkboxes = document.querySelectorAll('input[name="assets"]:checked');
             if (checkboxes.length === 0) {
-                showToast("Please select at least one asset.", "error");
+                alert("Please select at least one asset.");
                 return false;
             }
             return true;
         }
 
-        async function handleFormSubmission() {
-            if (!validateName() || !validateEmployeeID() || !validateAssets()) {
-                console.error('Form validation failed');
-                showToast("Form validation failed. Please check your inputs.", "error");
-                return false;
-            }
-            const formData = {
-                employeeName: document.getElementById('emp-name').value,
-                employeeId: document.getElementById('emp-id').value,
-                department: document.getElementById('department').value,
-                assets: Array.from(document.querySelectorAll('input[name="assets"]:checked')).map(cb => cb.value),
-            };
-            console.log('Submitting form data:', formData);
-            try {
-                const response = await fetch('http://localhost:3000/api/deliveries', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData),
-                });
-                const responseData = await response.json();
-                if (!response.ok) throw new Error(responseData.error || 'Failed to submit delivery');
-                showToast("Assets delivered successfully.", "success");
-                document.forms[0].reset();
-            } catch (error) {
-                console.error('Error submitting delivery:', error);
-                showToast(`Failed to submit delivery: ${error.message}`, "error");
-            }
-            return false;
-        }
+async function handleFormSubmission() {
+      event.preventDefault();
+    if (!validateName() || !validateEmployeeID() || !validateAssets()) {
+        console.error('Form validation failed');
+        return false;
+    }
+    
+    const formData = {
+        employeeName: document.getElementById('emp-name').value,
+        employeeId: document.getElementById('emp-id').value,
+        department: document.getElementById('department').value,
+        assets: Array.from(document.querySelectorAll('input[name="assets"]:checked')).map(cb => cb.value),
+    };
+    
+    console.log('Submitting form data:', formData);
+    
+    try {
+        const response = await fetch('http://localhost:3000/api/deliveries', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+        const responseData = await response.json();
+        
+        if (!response.ok) throw new Error(`Submission failed: ${responseData.error}`);
+        
+        // Show success message
+        showSuccessMessage("Asset delivery request submitted successfully!");
+        document.forms[0].reset();
+    } catch (error) {
+        console.error('Error submitting delivery:', error);
+        showSuccessMessage(`Submission failed: ${error.message}`, false);
+    }
+    return false;
+}
 
-        async function submitRequest() {
-            if (!validateModalName() || !validateModalEmployeeID() || !validateAssetName() || !validateReason()) {
-                showToast("Form validation failed. Please check your inputs.", "error");
-                return false;
-            }
-            const requestData = {
-                employeeName: document.getElementById('modal-emp-name').value,
-                employeeId: document.getElementById('modal-emp-id').value,
-                assetName: document.getElementById('additional-asset').value,
-                reason: document.getElementById('reason').value,
-            };
-            console.log('Submitting request data:', requestData);
-            try {
-                const response = await fetch('http://localhost:3000/api/requests', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(requestData),
-                });
-                const responseData = await response.json();
-                if (!response.ok) throw new Error(responseData.error || 'Failed to submit request');
-                showToast("Your request for additional assets has been submitted.", "success");
-                document.getElementById('asset-request-form').reset();
-                closeModal();
-            } catch (error) {
-                console.error('Error submitting request:', error);
-                showToast(`Failed to submit request: ${error.message}`, "error");
-            }
-            return false;
-        }
+async function submitRequest() {
+      event.preventDefault();
+    if (!validateModalName() || !validateModalEmployeeID() || !validateAssetName() || !validateReason()) {
+        return false;
+    }
+
+    const requestData = {
+        employeeName: document.getElementById('modal-emp-name').value,
+        employeeId: document.getElementById('modal-emp-id').value,
+        assetName: document.getElementById('additional-asset').value,
+        reason: document.getElementById('reason').value,
+    };
+
+    try {
+        const response = await fetch('http://localhost:3000/api/requests', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData),
+        });
+        
+        if (!response.ok) throw new Error('Request submission failed');
+        
+        // Show success message
+        showSuccessMessage("Additional asset request submitted successfully!");
+        document.getElementById('asset-request-form').reset();
+        closeModal();
+    } catch (error) {
+        console.error('Error submitting request:', error);
+        showSuccessMessage('Request submission failed:', false);
+    }
+    return false;
+}
+function showSuccessMessage(message, isSuccess = true) {
+    const successMessage = document.getElementById('success-message');
+    successMessage.textContent = message;
+    
+    // Reset classes
+    successMessage.className = 'success-message';
+    
+    // Add appropriate class
+    if (isSuccess) {
+        successMessage.style.backgroundColor = 'var(--success-color)';
+    } else {
+        successMessage.style.backgroundColor = 'var(--accent-color)';
+    }
+    
+    successMessage.classList.add('show');
+    
+    // Hide after 5 seconds
+    setTimeout(() => {
+        successMessage.classList.remove('show');
+    }, 3000);
+}
     </script>
 </body>
 </html>

@@ -191,14 +191,14 @@ app.post('/api/requests', async (req, res) => {
 });
 
 // Page 2: HR Asset Management - Get all asset deliveries with filtering and pagination
+// Page 2: HR Asset Management - Get all asset deliveries with filtering
 app.get('/api/deliveries', async (req, res) => {
-  const { search, department, sortBy, page = 1, limit = 5 } = req.query;
-  const offset = (parseInt(page) - 1) * parseInt(limit);
+  const { search, department, sortBy, all } = req.query;
   let query = 'SELECT * FROM asset_deliveries WHERE 1=1';
   let countQuery = 'SELECT COUNT(*) FROM asset_deliveries WHERE 1=1';
   const params = [];
 
-  console.log('Fetching deliveries with query:', { search, department, sortBy, page, limit });
+  console.log('Fetching deliveries with query:', { search, department, sortBy, all });
 
   // Search filter
   if (search) {
@@ -232,16 +232,32 @@ app.get('/api/deliveries', async (req, res) => {
       query += ' ORDER BY timestamp DESC';
   }
 
-  // Pagination
-  query += ` LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
-  params.push(parseInt(limit), offset);
-
   try {
-    const [deliveriesResult, countResult] = await Promise.all([
-      pool.query(query, params),
-      pool.query(countQuery, params.slice(0, params.length - 2))
-    ]);
-    const total = parseInt(countResult.rows[0].count, 10);
+    let deliveriesResult;
+    let total;
+
+    if (all === 'true') {
+      // Fetch all records without pagination
+      deliveriesResult = await pool.query(query, params);
+      total = deliveriesResult.rows.length;
+    } else {
+      // Apply pagination (keep existing logic for compatibility)
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 5;
+      const offset = (page - 1) * limit;
+
+      query += ` LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+      params.push(limit, offset);
+
+      const [result, countResult] = await Promise.all([
+        pool.query(query, params),
+        pool.query(countQuery, params.slice(0, params.length - 2)),
+      ]);
+
+      deliveriesResult = result;
+      total = parseInt(countResult.rows[0].count, 10);
+    }
+
     console.log('Deliveries fetched:', deliveriesResult.rows.length, 'Total:', total);
 
     res.json({
@@ -250,7 +266,7 @@ app.get('/api/deliveries', async (req, res) => {
         timestamp: formatDate(row.timestamp),
       })),
       total,
-      pages: Math.ceil(total / parseInt(limit))
+      pages: all === 'true' ? 1 : Math.ceil(total / (parseInt(req.query.limit) || 5)),
     });
   } catch (error) {
     console.error('Error fetching deliveries:', error);
