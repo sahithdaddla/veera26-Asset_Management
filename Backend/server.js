@@ -4,11 +4,11 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port =  3000;
 
-// Middleware
+
 app.use(cors({
-  origin: '*', // Allow all origins; adjust to specific origins (e.g., 'http://localhost:5500') for production
+  origin: '*', 
   methods: ['GET', 'POST', 'DELETE', 'PUT'],
   allowedHeaders: ['Content-Type']
 }));
@@ -16,11 +16,11 @@ app.use(express.json());
 
 // PostgreSQL connection
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'asset_management',
-  password: process.env.DB_PASSWORD || 'Veera@0134',
-  port: process.env.DB_PORT || 5432,
+  user:  'postgres',
+  host:  'localhost',
+  database: 'asset_management',
+  password:  'Veera@0134',
+  port: 5432,
 });
 
 // Utility function to format dates
@@ -121,7 +121,7 @@ async function initializeDatabase() {
     console.log('Database initialization completed');
   } catch (error) {
     console.error('Error initializing database:', error);
-    process.exit(1); // Exit if table creation fails
+    process.exit(1); 
   }
 }
 
