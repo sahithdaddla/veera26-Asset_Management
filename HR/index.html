@@ -413,8 +413,8 @@ function validateEmployeeId(id) {
 
 async function loadData() {
   try {
-    console.log('Fetching deliveries from http://localhost:3000/api/deliveries?all=true');
-    const response = await fetch('http://localhost:3000/api/deliveries?all=true', {
+    console.log('Fetching deliveries from http://13.48.194.31:3080/api/deliveries?all=true');
+    const response = await fetch('http://13.48.194.31:3080/api/deliveries?all=true', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });

@@ -4,7 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const port =  3000;
+const port =  3080;
 
 
 app.use(cors({
@@ -17,9 +17,9 @@ app.use(express.json());
 // PostgreSQL connection
 const pool = new Pool({
   user:  'postgres',
-  host:  'localhost',
+  host:  'postgres',
   database: 'asset_management',
-  password:  'Veera@0134',
+  password:  'admin123',
   port: 5432,
 });
 
