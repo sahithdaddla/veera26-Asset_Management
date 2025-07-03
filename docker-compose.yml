@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres-db
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: asset_management
+    ports:
+      - "5507:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+    networks:
+      - app-network
+
+  backend:
+    container_name: asset-backend
+    build: ./Backend
+    ports:
+      - "3080:3080"
+    depends_on:
+      - postgres
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=admin123
+      - DB_NAME=asset_management
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    networks:
+      - app-network
+
+  frontend:
+    container_name: asset-frontend
+    build: ./Frontend
+    ports:
+      - "8278:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  hr:
+    container_name: asset-hr
+    build: ./HR
+    ports:
+      - "8279:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  request:
+    container_name: asset-request
+    build: ./Request
+    ports:
+      - "8280:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  pgdata:
+
+networks:
+  app-network:
+
