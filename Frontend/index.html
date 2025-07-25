@@ -646,7 +646,7 @@ async function handleFormSubmission() {
     console.log('Submitting form data:', formData);
     
     try {
-        const response = await fetch('http://13.48.194.31:3080/api/deliveries', {
+        const response = await fetch('http://13.60.63.74:3080/api/deliveries', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
@@ -679,7 +679,7 @@ async function submitRequest() {
     };
 
     try {
-        const response = await fetch('http://13.48.194.31:3080/api/requests', {
+        const response = await fetch('http://13.60.63.74:3080/api/requests', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(requestData),
